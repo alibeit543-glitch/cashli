@@ -2,6 +2,9 @@ FROM node:20-slim
 
 WORKDIR /app
 
+# Install system dependencies required by mongodb-memory-server
+RUN apt-get update && apt-get install -y libcurl4 && rm -rf /var/lib/apt/lists/*
+
 # Install backend dependencies
 COPY backend/package.json backend/package-lock.json* ./backend/
 RUN cd backend && npm install
