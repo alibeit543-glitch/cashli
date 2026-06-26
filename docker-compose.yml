@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: cashli-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: cashli
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cashli-api
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongodb
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/cashli
+      JWT_SECRET: change-this-secret-in-production
+      FRONTEND_URL: http://localhost:3000
+    volumes:
+      - ./backend:/app/backend
+      - /app/node_modules
+
+  frontend:
+    image: node:20-alpine
+    container_name: cashli-frontend
+    working_dir: /app
+    command: sh -c "cd frontend && npm install && npm start"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      REACT_APP_API_URL: http://localhost:5000/api
+    volumes:
+      - .:/app
+      - /app/frontend/node_modules
+
+volumes:
+  mongodb_data:
