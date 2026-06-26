@@ -1,30 +1,17 @@
 services:
   - type: web
-    name: cashli-api
-    env: node
-    buildCommand: cd backend && npm install
-    startCommand: cd backend && node server.js
+    name: cashli
+    env: docker
+    dockerfilePath: Dockerfile
+    healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
         value: production
-      - key: PORT
-        value: 5000
-      - key: MONGODB_URI
-        sync: false
       - key: JWT_SECRET
         generateValue: true
-      - key: FRONTEND_URL
-        value: https://cashli-app.onrender.com
       - key: ADMIN_EMAIL
         value: admin@cashli.com
       - key: ADMIN_PASSWORD
-        sync: false
-
-  - type: web
-    name: cashli-frontend
-    env: static
-    buildCommand: cd frontend && npm install && npm run build
-    staticPublishPath: frontend/build
-    envVars:
-      - key: REACT_APP_API_URL
-        value: https://cashli-api.onrender.com/api
+        value: Admin@123
+      - key: MONGODB_URI
+        value: ""
