@@ -37,15 +37,15 @@ const Wallet = () => {
         <p>Your earnings and transaction history</p>
       </div>
 
-      {balance && (
+      {balance && balance.balance != null && (
         <div className="balance-card">
           <div className="balance-icon">
             <FiDollarSign size={32} />
           </div>
           <div className="balance-info">
             <span className="balance-label">Available Balance</span>
-            <span className="balance-amount">{balance.balance.toFixed(0)} coins</span>
-            <span className="balance-usd">≈ ${(balance.balance / 100).toFixed(2)} USD</span>
+            <span className="balance-amount">{(balance.balance || 0).toFixed(0)} coins</span>
+            <span className="balance-usd">≈ ${((balance.balance || 0) / 100).toFixed(2)} USD</span>
           </div>
           <Link to="/withdraw" className="btn btn-primary">
             <FiArrowUpRight size={18} /> Withdraw

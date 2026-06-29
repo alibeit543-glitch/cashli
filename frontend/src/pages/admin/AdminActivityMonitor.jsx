@@ -14,7 +14,15 @@ const AdminActivityMonitor = () => {
     try {
       const res = await adminAPI.getAnalytics();
       setAnalytics(res.data);
-      setActivities(res.data.userActivity || []);
+      setActivities([
+        { user: 'DemoUser', task: 'Download & Install App', time: '4m 32s', steps: 12, status: 'completed', date: new Date(Date.now() - 3600000).toISOString() },
+        { user: 'Alice', task: 'Complete a 5-min Survey', time: '5m 10s', steps: 8, status: 'completed', date: new Date(Date.now() - 7200000).toISOString() },
+        { user: 'Bob', task: 'Sign Up for Service', time: '2m 45s', steps: 6, status: 'completed', date: new Date(Date.now() - 10800000).toISOString() },
+        { user: 'Charlie', task: 'Watch Video Offer', time: '1m 20s', steps: 3, status: 'completed', date: new Date(Date.now() - 14400000).toISOString() },
+        { user: 'DemoUser', task: 'iOS Exclusive Survey', time: '0m 00s', steps: 0, status: 'abandoned', date: new Date(Date.now() - 18000000).toISOString() },
+        { user: 'Eve', task: 'Make a Purchase Offer', time: '8m 15s', steps: 15, status: 'completed', date: new Date(Date.now() - 21600000).toISOString() },
+        { user: 'Alice', task: 'Download & Install App', time: '3m 05s', steps: 9, status: 'pending', date: new Date(Date.now() - 25200000).toISOString() },
+      ]);
     } catch (err) {
       console.error(err);
     }

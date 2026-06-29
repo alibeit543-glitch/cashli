@@ -13,18 +13,19 @@ const AdminTransactions = () => {
       setLoading(true);
       try {
         const res = await adminAPI.getPlatformStats();
-        setTransactions([
-          { _id: '1', user: { username: 'DemoUser' }, type: 'earning', amount: 200, description: 'Completed: Download App', status: 'completed', createdAt: new Date(Date.now() - 3600000).toISOString() },
-          { _id: '2', user: { username: 'Alice' }, type: 'earning', amount: 50, description: 'Completed: 5-min Survey', status: 'completed', createdAt: new Date(Date.now() - 7200000).toISOString() },
-          { _id: '3', user: { username: 'Bob' }, type: 'withdrawal', amount: -500, description: 'Withdrawal via PayPal', status: 'completed', createdAt: new Date(Date.now() - 14400000).toISOString() },
-          { _id: '4', user: { username: 'DemoUser' }, type: 'bonus', amount: 20, description: 'Daily bonus (day 5)', status: 'completed', createdAt: new Date(Date.now() - 86400000).toISOString() },
-          { _id: '5', user: { username: 'Charlie' }, type: 'referral', amount: 50, description: 'Referral reward', status: 'completed', createdAt: new Date(Date.now() - 86400000 * 2).toISOString() },
-          { _id: '6', user: { username: 'DemoUser' }, type: 'earning', amount: 150, description: 'Completed: Sign Up for Service', status: 'completed', createdAt: new Date(Date.now() - 86400000 * 3).toISOString() },
-          { _id: '7', user: { username: 'Alice' }, type: 'withdrawal', amount: -250, description: 'Withdrawal via Gift Card', status: 'pending', createdAt: new Date(Date.now() - 86400000 * 4).toISOString() },
-          { _id: '8', user: { username: 'Bob' }, type: 'earning', amount: 500, description: 'Completed: Purchase Offer', status: 'completed', createdAt: new Date(Date.now() - 86400000 * 5).toISOString() },
-          { _id: '9', user: { username: 'DemoUser' }, type: 'bonus', amount: 100, description: 'Welcome bonus', status: 'completed', createdAt: new Date(Date.now() - 86400000 * 14).toISOString() },
-          { _id: '10', user: { username: 'Eve' }, type: 'earning', amount: 75, description: 'Completed: iOS Survey', status: 'completed', createdAt: new Date(Date.now() - 86400000 * 6).toISOString() },
-        ]);
+        // Try getting real transactions
+        try {
+          const txnRes = await adminAPI.getAdminTransactions({ type: filters.type || undefined });
+          setTransactions(txnRes.data.transactions);
+        } catch {
+          // fallback to mock data
+          setTransactions([
+            { _id: '1', user: { username: 'DemoUser' }, type: 'earning', amount: 200, description: 'Completed: Download App', status: 'completed', createdAt: new Date(Date.now() - 3600000).toISOString() },
+            { _id: '2', user: { username: 'Alice' }, type: 'earning', amount: 50, description: 'Completed: 5-min Survey', status: 'completed', createdAt: new Date(Date.now() - 7200000).toISOString() },
+            { _id: '3', user: { username: 'Bob' }, type: 'withdrawal', amount: -500, description: 'Withdrawal via PayPal', status: 'completed', createdAt: new Date(Date.now() - 14400000).toISOString() },
+            { _id: '9', user: { username: 'DemoUser' }, type: 'bonus', amount: 100, description: 'Welcome bonus', status: 'completed', createdAt: new Date(Date.now() - 86400000 * 14).toISOString() },
+          ]);
+        }
       } catch (err) {
         console.error(err);
       } finally {
@@ -32,7 +33,7 @@ const AdminTransactions = () => {
       }
     };
     fetch();
-  }, []);
+  }, [filters.type]);
 
   const filtered = transactions.filter((t) => {
     if (filters.type && t.type !== filters.type) return false;

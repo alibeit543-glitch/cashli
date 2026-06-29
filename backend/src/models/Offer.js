@@ -18,7 +18,7 @@ const offerSchema = new mongoose.Schema(
     category: {
       type: String,
       required: true,
-      enum: ['survey', 'offer', 'video', 'app-download', 'signup', 'purchase'],
+      enum: ['survey', 'offer', 'video', 'app-download', 'signup', 'purchase', 'task'],
     },
     reward: {
       type: Number,
@@ -28,6 +28,19 @@ const offerSchema = new mongoose.Schema(
     xpReward: {
       type: Number,
       default: 10,
+    },
+    difficulty: {
+      type: String,
+      enum: ['easy', 'medium', 'hard'],
+      default: 'medium',
+    },
+    maxCompletionsPerUser: {
+      type: Number,
+      default: 1,
+    },
+    timeToComplete: {
+      type: Number,
+      default: 5,
     },
     requirements: {
       type: String,
@@ -44,7 +57,7 @@ const offerSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ['active', 'inactive', 'expired'],
+      enum: ['active', 'inactive', 'expired', 'draft', 'paused'],
       default: 'active',
     },
     totalSlots: {
@@ -55,12 +68,29 @@ const offerSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    suspiciousCompletions: {
+      type: Number,
+      default: 0,
+    },
+    revenueGenerated: {
+      type: Number,
+      default: 0,
+    },
     device: {
       type: String,
       enum: ['all', 'ios', 'android'],
       default: 'all',
     },
     countries: [String],
+    minAccountAge: {
+      type: Number,
+      default: 0,
+    },
+    trustLevelRequired: {
+      type: String,
+      enum: ['all', 'regular', 'trusted'],
+      default: 'all',
+    },
     startDate: {
       type: Date,
       default: Date.now,

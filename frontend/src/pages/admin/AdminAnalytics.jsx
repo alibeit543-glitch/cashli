@@ -9,7 +9,6 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarEleme
 
 const AdminAnalytics = () => {
   const [data, setData] = useState(null);
-  const [period, setPeriod] = useState('30d');
 
   useEffect(() => {
     adminAPI.getAnalytics().then(r => setData(r.data)).catch(console.error);
@@ -17,7 +16,7 @@ const AdminAnalytics = () => {
 
   if (!data) return <div className="page admin-page"><div className="loading">Loading analytics...</div></div>;
 
-  const { overview, dailyData, topOffers, userActivity, deviceBreakdown, countryBreakdown } = data;
+  const { overview, dailyData, topOffers, deviceBreakdown, countryBreakdown } = data;
 
   const lineCfg = {
     labels: dailyData.map(d => d.date.slice(5)),
@@ -156,16 +155,7 @@ const AdminAnalytics = () => {
               </tr>
             </thead>
             <tbody>
-              {userActivity.map((a, i) => (
-                <tr key={i}>
-                  <td><strong>{a.user}</strong></td>
-                  <td>{a.task}</td>
-                  <td>{a.time}</td>
-                  <td>{a.steps} steps</td>
-                  <td><span className={`badge badge-${a.status}`}>{a.status}</span></td>
-                  <td>{new Date(a.date).toLocaleDateString()}</td>
-                </tr>
-              ))}
+              <tr><td colSpan="6" style={{ textAlign: 'center', padding: 32, color: 'var(--text-muted)' }}>Detailed activity tracking available on the Activity Monitor page</td></tr>
             </tbody>
           </table>
         </div>

@@ -26,21 +26,28 @@ const start = async () => {
     await connectDB();
     const db = mongoose.connection.db;
     const collections = await db.listCollections().toArray();
-    if (collections.length <= 2) {
+    if (collections.length <= 3) {
       console.log('Empty database detected, running seed...');
       await require('./src/seed')();
       await seedDemoFraudAlerts();
     }
+
+    // Cron: check overdue withdrawals every 10 minutes
+    const { checkOverdueWithdrawals } = require('./src/services/cronService');
+    checkOverdueWithdrawals();
+    setInterval(checkOverdueWithdrawals, 10 * 60 * 1000);
+    console.log('Cron: withdrawal reminder service started');
   } catch (err) {
     console.error('MongoDB connection failed, using mock data fallback:', err.message);
   }
 
   app.listen(PORT, () => {
-    console.log(`\n  \u{1f680} Cashli API running on http://localhost:${PORT}`);
+    console.log(`\n  🚀 Cashli API running on http://localhost:${PORT}`);
     console.log(`  \n  Demo Accounts:`);
-    console.log(`  \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500`);
+    console.log(`  ───────────────`);
     console.log(`  User:  demo@cashli.com / demo123`);
     console.log(`  Admin: admin@cashli.com / Admin@123`);
+    console.log(`  Moderator: moderator@cashli.com / Moderator@123`);
     console.log(`  \n  Open http://localhost:3000 to see the app!\n`);
   });
 };

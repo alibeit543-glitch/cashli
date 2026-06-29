@@ -4,14 +4,18 @@ const { calculateLevelProgress } = require('../utils/helpers');
 exports.getBalance = async (req, res) => {
   try {
     const user = req.user;
-    const levelProgress = calculateLevelProgress(user.xp);
+    if (!user || user.role === 'admin' || user.role === 'super_admin') {
+      return res.status(403).json({ message: 'Admins do not have a wallet' });
+    }
+
+    const levelProgress = calculateLevelProgress(user.xp || 0);
 
     res.json({
-      balance: user.balance,
-      totalEarned: user.totalEarned,
-      totalWithdrawn: user.totalWithdrawn,
-      xp: user.xp,
-      level: user.level,
+      balance: user.balance || 0,
+      totalEarned: user.totalEarned || 0,
+      totalWithdrawn: user.totalWithdrawn || 0,
+      xp: user.xp || 0,
+      level: user.level || 1,
       levelProgress,
     });
   } catch (error) {

@@ -2,17 +2,43 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#6366f1" />
-    <meta name="description" content="Cashli - Earn real rewards by completing offers, surveys, and tasks" />
+    <meta name="description" content="Earn real cash rewards by completing offers, surveys, and tasks on Cashli. Fast payouts, free to join." />
+    <meta name="keywords" content="earn money online, reward app, surveys for cash, cashli, get paid to" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://cashli.app/" />
+    <meta property="og:title" content="Cashli - Earn Real Rewards Online" />
+    <meta property="og:description" content="Earn real cash rewards by completing offers, surveys, and tasks." />
+    <meta property="og:image" content="https://cashli.app/og-image.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Cashli - Earn Real Rewards Online" />
+    <meta name="twitter:description" content="Earn real cash rewards by completing offers, surveys, and tasks." />
+    <meta name="twitter:image" content="https://cashli.app/og-image.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-    <title>Cashli - Earn Real Rewards</title>
+    <title>Cashli - Earn Real Rewards Online</title>
+    <meta name="title" content="Cashli - Earn Real Rewards Online" />
+    <style>
+      .loading-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background: #0f0f1a; font-family: 'Inter', sans-serif; color: #fff; }
+      .loading-spinner { width: 48px; height: 48px; border: 4px solid rgba(99,102,241,0.2); border-top-color: #6366f1; border-radius: 50%; animation: spin 0.8s linear infinite; }
+      .loading-text { margin-top: 20px; font-size: 18px; color: #a0a0b8; }
+      .loading-logo { font-size: 40px; margin-bottom: 12px; }
+      @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <noscript>
+      <meta http-equiv="refresh" content="0;url=https://cashli.app/no-js" />
+    </noscript>
+    <div id="root">
+      <div class="loading-screen">
+        <div class="loading-logo">💰</div>
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Chargement de Cashli...</div>
+      </div>
+    </div>
   </body>
 </html>

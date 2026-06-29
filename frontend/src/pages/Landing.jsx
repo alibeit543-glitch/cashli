@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { FiArrowRight, FiDollarSign, FiUsers, FiAward, FiShield, FiZap } from 'react-icons/fi';
+import { FiArrowRight, FiDollarSign, FiUsers, FiAward, FiShield, FiZap, FiMail } from 'react-icons/fi';
 
 const Landing = () => (
   <div className="landing">
@@ -89,7 +89,14 @@ const Landing = () => (
     </section>
 
     <footer className="landing-footer">
-      <p>&copy; 2024 Cashli. All rights reserved.</p>
+      <div className="landing-footer-inner">
+        <p>&copy; 2026 Cashli. All rights reserved.</p>
+        <div className="landing-footer-links">
+          <a href="mailto:support@cashli.app"><FiMail size={14} /> support@cashli.app</a>
+          <Link to="/privacy-policy">Privacy Policy</Link>
+          <Link to="/terms">Terms of Service</Link>
+        </div>
+      </div>
     </footer>
   </div>
 );

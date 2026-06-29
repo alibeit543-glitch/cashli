@@ -32,7 +32,7 @@ const AdminFraudAlerts = () => {
   const updateAlert = async (id, status) => {
     try {
       await adminAPI.updateFraudAlert(id, { status });
-      setAlerts(alerts.map(a => a.id === id ? { ...a, status } : a));
+      setAlerts(alerts.map(a => a._id === id ? { ...a, status } : a));
       if (status === 'new') {
         setNewCount(prev => Math.max(0, prev - 1));
       }
@@ -152,7 +152,7 @@ const AdminFraudAlerts = () => {
               <div className="empty-state">No alerts match this filter</div>
             ) : (
               alerts.map(alert => (
-                <div key={alert.id} className={`fraud-alert-card severity-${alert.severity} status-${alert.status}`}>
+                <div key={alert._id} className={`fraud-alert-card severity-${alert.severity} status-${alert.status}`}>
                   <div className="alert-icon">{getAlertIcon(alert.type)}</div>
                   <div className="alert-content">
                     <div className="alert-header">
@@ -165,31 +165,31 @@ const AdminFraudAlerts = () => {
                         {alert.severity.toUpperCase()}
                       </span>
                       <span className="alert-type">{alert.type}</span>
-                      <span className="alert-time">{new Date(alert.timestamp).toLocaleString()}</span>
+                      <span className="alert-time">{new Date(alert.createdAt || alert.timestamp).toLocaleString()}</span>
                     </div>
                   </div>
                   <div className="alert-actions">
                     {alert.status === 'new' && (
                       <>
-                        <button className="btn btn-sm btn-primary" onClick={() => updateAlert(alert.id, 'reviewing')}>
+                        <button className="btn btn-sm btn-primary" onClick={() => updateAlert(alert._id, 'reviewing')}>
                           <FiEye size={12} /> Review
                         </button>
-                        <button className="btn btn-sm" onClick={() => updateAlert(alert.id, 'dismissed')}>
+                        <button className="btn btn-sm" onClick={() => updateAlert(alert._id, 'dismissed')}>
                           <FiXCircle size={12} /> Dismiss
                         </button>
                       </>
                     )}
                     {alert.status === 'reviewing' && (
                       <>
-                        <button className="btn btn-sm btn-success" onClick={() => updateAlert(alert.id, 'resolved')}>
+                        <button className="btn btn-sm btn-success" onClick={() => updateAlert(alert._id, 'resolved')}>
                           <FiCheckCircle size={12} /> Resolve
                         </button>
-                        <button className="btn btn-sm" onClick={() => updateAlert(alert.id, 'dismissed')}>
+                        <button className="btn btn-sm" onClick={() => updateAlert(alert._id, 'dismissed')}>
                           <FiXCircle size={12} /> Dismiss
                         </button>
                       </>
                     )}
-                    <button className="btn btn-sm" onClick={() => viewUserActivity(alert.userId)} title="Investigate">
+                    <button className="btn btn-sm" onClick={() => viewUserActivity(alert.userId || alert.user)} title="Investigate">
                       <FiSearch size={12} /> Investigate
                     </button>
                   </div>

@@ -15,7 +15,7 @@ const Navbar = () => {
     { to: '/wallet', label: 'Wallet', icon: FiDollarSign },
     { to: '/referrals', label: 'Referrals', icon: FiUsers },
     { to: '/levels', label: 'Levels', icon: FiAward },
-    ...(user?.role === 'admin' ? [{ to: '/admin', label: 'Admin', icon: FiShield }] : []),
+    ...(['admin', 'super_admin', 'moderator'].includes(user?.role) ? [{ to: '/admin', label: 'Admin', icon: FiShield }] : []),
   ];
 
   const handleLogout = () => {

@@ -58,6 +58,16 @@ const userSchema = new mongoose.Schema(
       enum: ['user', 'admin'],
       default: 'user',
     },
+    trustLevel: {
+      type: String,
+      enum: ['new', 'regular', 'trusted', 'banned'],
+      default: 'new',
+    },
+    status: {
+      type: String,
+      enum: ['active', 'banned', 'on_hold', 'suspicious'],
+      default: 'active',
+    },
     dailyStreak: {
       type: Number,
       default: 0,
@@ -83,6 +93,17 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    lastActive: {
+      type: Date,
+    },
+    adminNotes: {
+      type: String,
+    },
+    deviceIds: [{ type: String }],
+    ipAddresses: [{ type: String }],
+    paymentAccountHashes: [{ type: String }],
+    offersCompletedCount: { type: Number, default: 0 },
+    totalWithdrawalRequests: { type: Number, default: 0 },
   },
   {
     timestamps: true,
